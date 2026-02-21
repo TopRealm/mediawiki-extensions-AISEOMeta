@@ -5,7 +5,10 @@
         ]
     },
     "aiseometa-desc": "透過工作佇列利用 AI (Gemini 或 OpenAI) 自動為 Wiki 頁面產生 SEO Meta 標籤。",
-    "aiseometa": "AI SEO Meta 控制台",
+    "specialpages-group-aiseometa": "AI SEO Meta",
+    "aiseometa-test": "測試 AI 提供商",
+    "aiseometa-query": "查詢頁面狀態",
+    "aiseometa-batch": "批次重新產生 SEO 標籤",
     "aiseometa-config-title": "目前設定",
     "aiseometa-query-title": "查詢頁面狀態",
     "aiseometa-page-title": "頁面標題",

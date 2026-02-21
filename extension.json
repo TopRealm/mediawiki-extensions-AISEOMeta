@@ -24,7 +24,9 @@
         "AISEOMetaMagic": "AISEOMeta.i18n.magic.php"
     },
     "SpecialPages": {
-        "AISEOMeta": "AISEOMeta\\SpecialAISEOMeta"
+        "AISEOMetaTest": "AISEOMeta\\SpecialAISEOMetaTest",
+        "AISEOMetaQuery": "AISEOMeta\\SpecialAISEOMetaQuery",
+        "AISEOMetaBatch": "AISEOMeta\\SpecialAISEOMetaBatch"
     },
     "Hooks": {
         "PageSaveComplete": "AISEOMeta\\Hooks::onPageSaveComplete",

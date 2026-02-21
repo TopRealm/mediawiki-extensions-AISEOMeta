@@ -3,9 +3,13 @@
 $specialPageAliases = [];
 
 $specialPageAliases['en'] = [
-	'AISEOMeta' => [ 'AISEOMeta' ],
+	'AISEOMetaTest' => [ 'AISEOMetaTest' ],
+	'AISEOMetaQuery' => [ 'AISEOMetaQuery' ],
+	'AISEOMetaBatch' => [ 'AISEOMetaBatch' ],
 ];
 
 $specialPageAliases['zh-hans'] = [
-	'AISEOMeta' => [ 'AISEOMeta', 'AISEO元数据' ],
+	'AISEOMetaTest' => [ 'AISEOMeta测试' ],
+	'AISEOMetaQuery' => [ 'AISEOMeta查询' ],
+	'AISEOMetaBatch' => [ 'AISEOMeta批量生成' ],
 ];

@@ -5,7 +5,10 @@
         ]
     },
     "aiseometa-desc": "Automatically generates SEO Meta tags for Wiki pages using AI (Gemini or OpenAI) via Job Queue.",
-    "aiseometa": "AI SEO Meta Console",
+    "specialpages-group-aiseometa": "AI SEO Meta",
+    "aiseometa-test": "Test AI Provider",
+    "aiseometa-query": "Query Page Status",
+    "aiseometa-batch": "Batch Regenerate SEO Meta",
     "aiseometa-config-title": "Current Configuration",
     "aiseometa-query-title": "Query Page Status",
     "aiseometa-page-title": "Page Title",
