@@ -32,12 +32,14 @@ class GeminiProvider implements AIProviderInterface {
 
             if ($response && $response->text()) {
                 $content = $response->text();
-                
-                // Gemini sometimes wraps JSON in markdown code blocks
-                $content = preg_replace('/^```json\s*(.*?)\s*```$/s', '$1', $content);
-                
+
+                // Robust JSON extraction: find the first '{' and last '}'
+                if (preg_match('/\{[\s\S]*\}/', $content, $matches)) {
+                    $content = $matches[0];
+                }
+
                 $tags = json_decode($content, true);
-                
+
                 if (json_last_error() !== JSON_ERROR_NONE) {
                     $this->logger->error('Failed to decode JSON from Gemini response content: {error}', [
                         'error' => json_last_error_msg(),

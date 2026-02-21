@@ -58,8 +58,14 @@ class OpenAIProvider implements AIProviderInterface {
 
             if (isset($response->choices[0]->message->content)) {
                 $content = $response->choices[0]->message->content;
-                $tags = json_decode($content, true);
                 
+                // Robust JSON extraction: find the first '{' and last '}'
+                if (preg_match('/\{[\s\S]*\}/', $content, $matches)) {
+                    $content = $matches[0];
+                }
+                
+                $tags = json_decode($content, true);
+
                 if (json_last_error() !== JSON_ERROR_NONE) {
                     $this->logger->error('Failed to decode JSON from OpenAI response content: {error}', [
                         'error' => json_last_error_msg(),

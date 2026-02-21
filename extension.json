@@ -66,7 +66,7 @@
             "description": "Gemini 模型名称"
         },
         "ASMPromptTemplate": {
-            "value": "Please generate SEO meta tags (description, keywords) for the following wiki page text. Return ONLY a valid JSON object with keys 'description' and 'keywords'. Text: {text}",
+            "value": "Extract SEO description (max 160 chars) and keywords (comma-separated) from the text. Output JSON only: {\"description\":\"\",\"keywords\":\"\"}. Text: {text}",
             "description": "发送给 AI 的 Prompt 模板"
         }
     },

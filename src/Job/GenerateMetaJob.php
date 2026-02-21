@@ -37,10 +37,19 @@ class GenerateMetaJob extends Job {
             return true;
         }
 
-        // Get plain text (simplified, ideally use Parser to strip wikitext)
-        $text = $content->getText();
-        $text = strip_tags($text);
-        $text = mb_substr($text, 0, 2000); // Limit to 2000 chars to save tokens
+        // Parse wikitext to HTML to get the actual rendered text
+        $parser = $services->getParser();
+        $parserOptions = \ParserOptions::newFromAnon();
+        $parserOutput = $parser->parse($content->getText(), $this->getTitle(), $parserOptions);
+        $html = $parserOutput->getText();
+        
+        // Strip HTML tags and normalize whitespace
+        $text = strip_tags($html);
+        $text = preg_replace('/\s+/', ' ', $text);
+        $text = trim($text);
+        
+        // Limit to 2000 chars to save tokens (usually enough for SEO context)
+        $text = mb_substr($text, 0, 2000);
 
         $provider = ProviderFactory::create();
         $tags = $provider->generate($text);
