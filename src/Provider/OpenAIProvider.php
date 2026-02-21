@@ -9,7 +9,7 @@ class OpenAIProvider implements AIProviderInterface {
     private LoggerInterface $logger;
 
     public function __construct() {
-        $this->logger = MediaWikiServices::getInstance()->getLogger('AISEOMeta');
+        $this->logger = \MediaWiki\Logger\LoggerFactory::getInstance('AISEOMeta');
     }
 
     public function generate(string $text): array {
