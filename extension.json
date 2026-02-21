@@ -28,6 +28,14 @@
         "AISEOMetaQuery": "AISEOMeta\\SpecialAISEOMetaQuery",
         "AISEOMetaBatch": "AISEOMeta\\SpecialAISEOMetaBatch"
     },
+    "AvailableRights": [
+        "aiseometa-admin"
+    ],
+    "GroupPermissions": {
+        "sysop": {
+            "aiseometa-admin": true
+        }
+    },
     "Hooks": {
         "PageSaveComplete": "AISEOMeta\\Hooks::onPageSaveComplete",
         "BeforePageDisplay": "AISEOMeta\\Hooks::onBeforePageDisplay"

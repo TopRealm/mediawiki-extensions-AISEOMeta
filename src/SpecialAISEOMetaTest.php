@@ -7,7 +7,7 @@ use Html;
 
 class SpecialAISEOMetaTest extends SpecialAISEOMetaBase {
     public function __construct() {
-        parent::__construct('AISEOMetaTest', 'edit');
+        parent::__construct('AISEOMetaTest', 'aiseometa-admin');
     }
 
     public function execute($subPage) {

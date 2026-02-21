@@ -29,5 +29,7 @@
     "aiseometa-test-message": "Test Message",
     "aiseometa-test-submit": "Send Test",
     "aiseometa-test-success": "AI Response:",
-    "aiseometa-test-error": "AI Test Failed: $1"
+    "aiseometa-test-error": "AI Test Failed: $1",
+    "right-aiseometa-admin": "Manage AI SEO Meta settings and batch operations",
+    "action-aiseometa-admin": "manage AI SEO Meta settings and batch operations"
 }

@@ -9,7 +9,7 @@ use MediaWiki\MediaWikiServices;
 
 class SpecialAISEOMetaBatch extends SpecialAISEOMetaBase {
     public function __construct() {
-        parent::__construct('AISEOMetaBatch', 'edit');
+        parent::__construct('AISEOMetaBatch', 'aiseometa-admin');
     }
 
     public function execute($subPage) {

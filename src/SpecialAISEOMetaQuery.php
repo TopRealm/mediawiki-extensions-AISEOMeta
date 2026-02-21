@@ -7,7 +7,7 @@ use Html;
 
 class SpecialAISEOMetaQuery extends SpecialAISEOMetaBase {
     public function __construct() {
-        parent::__construct('AISEOMetaQuery', 'edit');
+        parent::__construct('AISEOMetaQuery', 'aiseometa-admin');
     }
 
     public function execute($subPage) {

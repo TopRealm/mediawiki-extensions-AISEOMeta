@@ -29,5 +29,7 @@
     "aiseometa-test-message": "测试消息",
     "aiseometa-test-submit": "发送测试",
     "aiseometa-test-success": "AI 响应：",
-    "aiseometa-test-error": "AI 测试失败：$1"
+    "aiseometa-test-error": "AI 测试失败：$1",
+    "right-aiseometa-admin": "管理 AI SEO Meta 设置和批量操作",
+    "action-aiseometa-admin": "管理 AI SEO Meta 设置和批量操作"
 }
