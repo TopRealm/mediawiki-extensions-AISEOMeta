@@ -82,10 +82,6 @@ class SpecialAISEOMeta extends SpecialPage {
                 'label-message' => 'aiseometa-test-message',
                 'default' => 'Hello, are you working?',
                 'required' => true,
-            ],
-            'action_type' => [
-                'type' => 'hidden',
-                'default' => 'test'
             ]
         ];
 
@@ -96,7 +92,10 @@ class SpecialAISEOMeta extends SpecialPage {
     }
 
     public function processTestForm($formData) {
-        if (($formData['action_type'] ?? '') !== 'test') return false;
+        $request = $this->getRequest();
+        if (!$request->wasPosted() || $request->getVal('wpwpbuild') !== 'testform') {
+            return false;
+        }
 
         $message = $formData['testmessage'];
         $out = $this->getOutput();
@@ -131,10 +130,6 @@ class SpecialAISEOMeta extends SpecialPage {
                 'type' => 'text',
                 'label-message' => 'aiseometa-page-title',
                 'required' => true,
-            ],
-            'action_type' => [
-                'type' => 'hidden',
-                'default' => 'query'
             ]
         ];
 
@@ -145,7 +140,10 @@ class SpecialAISEOMeta extends SpecialPage {
     }
 
     public function processQueryForm($formData) {
-        if (($formData['action_type'] ?? '') !== 'query') return false;
+        $request = $this->getRequest();
+        if (!$request->wasPosted() || $request->getVal('wpwpbuild') !== 'queryform') {
+            return false;
+        }
 
         $titleText = $formData['pagetitle'];
         $title = Title::newFromText($titleText);
@@ -207,10 +205,6 @@ class SpecialAISEOMeta extends SpecialPage {
                 'help-message' => 'aiseometa-batch-help',
                 'required' => true,
                 'rows' => 5
-            ],
-            'action_type' => [
-                'type' => 'hidden',
-                'default' => 'batch'
             ]
         ];
 
@@ -221,7 +215,10 @@ class SpecialAISEOMeta extends SpecialPage {
     }
 
     public function processBatchForm($formData) {
-        if (($formData['action_type'] ?? '') !== 'batch') return false;
+        $request = $this->getRequest();
+        if (!$request->wasPosted() || $request->getVal('wpwpbuild') !== 'batchform') {
+            return false;
+        }
 
         $titles = explode("\n", $formData['pagetitles']);
         $count = 0;
