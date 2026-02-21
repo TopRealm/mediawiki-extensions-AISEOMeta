@@ -6,6 +6,7 @@ use HTMLForm;
 use Title;
 use MediaWiki\MediaWikiServices;
 use AISEOMeta\Job\GenerateMetaJob;
+use Html;
 
 class SpecialAISEOMeta extends SpecialPage {
     public function __construct() {
@@ -30,28 +31,29 @@ class SpecialAISEOMeta extends SpecialPage {
         $openAiKey = $config->get('ASMOpenAIKey') ? '✅ Set' : '❌ Not set';
         $geminiKey = $config->get('ASMGeminiKey') ? '✅ Set' : '❌ Not set';
 
-        $html = "<h2>" . $this->msg('aiseometa-config-title')->escaped() . "</h2>";
-        $html .= "<ul>";
-        $html .= "<li><b>Provider:</b> " . htmlspecialchars($provider) . "</li>";
-        $html .= "<li><b>OpenAI Model:</b> " . htmlspecialchars($config->get('ASMOpenAIModel')) . "</li>";
-        $html .= "<li><b>OpenAI Key:</b> " . $openAiKey . "</li>";
+        $out->addHTML(Html::element('h2', [], $this->msg('aiseometa-config-title')->text()));
+
+        $listItems = '';
+        $listItems .= Html::rawElement('li', [], Html::element('b', [], 'Provider: ') . htmlspecialchars($provider));
+        $listItems .= Html::rawElement('li', [], Html::element('b', [], 'OpenAI Model: ') . htmlspecialchars($config->get('ASMOpenAIModel')));
+        $listItems .= Html::rawElement('li', [], Html::element('b', [], 'OpenAI Key: ') . $openAiKey);
         
         $additionalParams = $config->get('ASMOpenAIAdditionalParams');
         if (is_array($additionalParams) && !empty($additionalParams)) {
-            $html .= "<li><b>OpenAI Additional Params:</b> <pre>" . htmlspecialchars(json_encode($additionalParams, JSON_UNESCAPED_UNICODE)) . "</pre></li>";
+            $pre = Html::element('pre', [], json_encode($additionalParams, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+            $listItems .= Html::rawElement('li', [], Html::element('b', [], 'OpenAI Additional Params: ') . $pre);
         }
 
-        $html .= "<li><b>Gemini Model:</b> " . htmlspecialchars($config->get('ASMGeminiModel')) . "</li>";
-        $html .= "<li><b>Gemini Key:</b> " . $geminiKey . "</li>";
-        $html .= "</ul>";
+        $listItems .= Html::rawElement('li', [], Html::element('b', [], 'Gemini Model: ') . htmlspecialchars($config->get('ASMGeminiModel')));
+        $listItems .= Html::rawElement('li', [], Html::element('b', [], 'Gemini Key: ') . $geminiKey);
 
-        $out->addHTML($html);
+        $out->addHTML(Html::rawElement('ul', [], $listItems));
     }
 
     private function showQueryForm() {
         $out = $this->getOutput();
 
-        $out->addHTML("<h2>" . $this->msg('aiseometa-query-title')->escaped() . "</h2>");
+        $out->addHTML(Html::element('h2', [], $this->msg('aiseometa-query-title')->text()));
 
         $formDescriptor = [
             'pagetitle' => [
@@ -65,7 +67,7 @@ class SpecialAISEOMeta extends SpecialPage {
             ]
         ];
 
-        $htmlForm = HTMLForm::factory('ooui', $formDescriptor, $this->getContext(), 'queryform');
+        $htmlForm = HTMLForm::factory('codex', $formDescriptor, $this->getContext(), 'queryform');
         $htmlForm->setSubmitTextMsg('aiseometa-query-submit');
         $htmlForm->setSubmitCallback([$this, 'processQueryForm']);
         $htmlForm->show();
@@ -79,7 +81,7 @@ class SpecialAISEOMeta extends SpecialPage {
         $out = $this->getOutput();
 
         if (!$title || !$title->exists()) {
-            $out->addHTML("<p style='color:red;'>" . $this->msg('aiseometa-invalid-page')->escaped() . "</p>");
+            $out->addHTML(Html::element('div', ['class' => 'errorbox'], $this->msg('aiseometa-invalid-page')->text()));
             return true;
         }
 
@@ -88,24 +90,29 @@ class SpecialAISEOMeta extends SpecialPage {
         $tags = $metaManager->getTagsFromProps($pageId);
         $updated = $metaManager->getUpdateTime($pageId);
 
-        $out->addHTML("<h3>" . $this->msg('aiseometa-result-title', $title->getPrefixedText())->escaped() . "</h3>");
+        $out->addHTML(Html::element('h3', [], $this->msg('aiseometa-result-title', $title->getPrefixedText())->text()));
         
         if ($updated) {
             $lang = $this->getLanguage();
             $timeStr = $lang->timeanddate($updated, true);
-            $out->addHTML("<p><b>" . $this->msg('aiseometa-last-updated')->escaped() . ":</b> " . htmlspecialchars($timeStr) . "</p>");
+            $out->addHTML(Html::rawElement('p', [], Html::element('b', [], $this->msg('aiseometa-last-updated')->text() . ': ') . htmlspecialchars($timeStr)));
         } else {
-            $out->addHTML("<p><b>" . $this->msg('aiseometa-last-updated')->escaped() . ":</b> " . $this->msg('aiseometa-never')->escaped() . "</p>");
+            $out->addHTML(Html::rawElement('p', [], Html::element('b', [], $this->msg('aiseometa-last-updated')->text() . ': ') . $this->msg('aiseometa-never')->text()));
         }
 
         if (!empty($tags)) {
-            $out->addHTML("<pre>" . htmlspecialchars(json_encode($tags, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)) . "</pre>");
+            $out->addHTML(Html::element('pre', [], json_encode($tags, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)));
         } else {
-            $out->addHTML("<p>" . $this->msg('aiseometa-no-tags')->escaped() . "</p>");
+            $out->addHTML(Html::element('p', [], $this->msg('aiseometa-no-tags')->text()));
         }
 
         $regenerateUrl = $this->getPageTitle()->getLocalURL(['action' => 'regenerate', 'page' => $title->getPrefixedDBkey()]);
-        $out->addHTML("<p><a href='" . htmlspecialchars($regenerateUrl) . "' class='oo-ui-buttonElement-button'>" . $this->msg('aiseometa-regenerate-btn')->escaped() . "</a></p>");
+        $btn = Html::element('a', [
+            'href' => $regenerateUrl,
+            'class' => 'cdx-button cdx-button--action-default cdx-button--weight-primary'
+        ], $this->msg('aiseometa-regenerate-btn')->text());
+        
+        $out->addHTML(Html::rawElement('p', [], $btn));
 
         return true;
     }
@@ -116,11 +123,11 @@ class SpecialAISEOMeta extends SpecialPage {
 
         if ($request->getVal('action') === 'regenerate' && $request->getVal('page')) {
             if ($this->pushJobForPage($request->getVal('page'))) {
-                $out->addHTML("<p style='color:green;'>" . $this->msg('aiseometa-job-pushed', htmlspecialchars($request->getVal('page')))->escaped() . "</p>");
+                $out->addHTML(Html::element('div', ['class' => 'successbox'], $this->msg('aiseometa-job-pushed', $request->getVal('page'))->text()));
             }
         }
 
-        $out->addHTML("<h2>" . $this->msg('aiseometa-batch-title')->escaped() . "</h2>");
+        $out->addHTML(Html::element('h2', [], $this->msg('aiseometa-batch-title')->text()));
 
         $formDescriptor = [
             'pagetitles' => [
@@ -136,7 +143,7 @@ class SpecialAISEOMeta extends SpecialPage {
             ]
         ];
 
-        $htmlForm = HTMLForm::factory('ooui', $formDescriptor, $this->getContext(), 'batchform');
+        $htmlForm = HTMLForm::factory('codex', $formDescriptor, $this->getContext(), 'batchform');
         $htmlForm->setSubmitTextMsg('aiseometa-batch-submit');
         $htmlForm->setSubmitCallback([$this, 'processBatchForm']);
         $htmlForm->show();
@@ -158,7 +165,7 @@ class SpecialAISEOMeta extends SpecialPage {
             }
         }
 
-        $out->addHTML("<p style='color:green;'>" . $this->msg('aiseometa-batch-success', $count)->escaped() . "</p>");
+        $out->addHTML(Html::element('div', ['class' => 'successbox'], $this->msg('aiseometa-batch-success', $count)->text()));
         return true;
     }
 
