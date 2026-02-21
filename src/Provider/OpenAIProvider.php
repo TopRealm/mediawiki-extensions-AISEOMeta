@@ -29,7 +29,8 @@ class OpenAIProvider implements AIProviderInterface {
         try {
             // Configure custom endpoint if provided (useful for OpenAI-compatible APIs)
             $factory = OpenAI::factory()
-                ->withApiKey($key);
+                ->withApiKey($key)
+                ->withHttpClient(new \GuzzleHttp\Client(['timeout' => 30.0]));
             
             if (!empty($endpoint) && $endpoint !== 'https://api.openai.com/v1/chat/completions') {
                 // Extract base URI from endpoint (e.g., https://api.openai.com/v1)
@@ -99,7 +100,9 @@ class OpenAIProvider implements AIProviderInterface {
             throw new \Exception('OpenAI API key is not configured.');
         }
 
-        $factory = OpenAI::factory()->withApiKey($key);
+        $factory = OpenAI::factory()
+            ->withApiKey($key)
+            ->withHttpClient(new \GuzzleHttp\Client(['timeout' => 15.0]));
         
         if (!empty($endpoint) && $endpoint !== 'https://api.openai.com/v1/chat/completions') {
             $baseUri = preg_replace('#/chat/completions$#', '', $endpoint);

@@ -26,7 +26,10 @@ class GeminiProvider implements AIProviderInterface {
         $prompt = str_replace('{text}', $text, $promptTemplate);
 
         try {
-            $client = \Gemini::client($key);
+            $client = \Gemini::factory()
+                ->withApiKey($key)
+                ->withHttpClient(new \GuzzleHttp\Client(['timeout' => 30.0]))
+                ->make();
             
             $response = $client->generativeModel(model: $model)->generateContent($prompt);
 
@@ -72,7 +75,11 @@ class GeminiProvider implements AIProviderInterface {
             throw new \Exception('Gemini API key is not configured.');
         }
 
-        $client = \Gemini::client($key);
+        $client = \Gemini::factory()
+            ->withApiKey($key)
+            ->withHttpClient(new \GuzzleHttp\Client(['timeout' => 15.0]))
+            ->make();
+            
         $response = $client->generativeModel(model: $model)->generateContent($message);
 
         if ($response && $response->text()) {

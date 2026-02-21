@@ -37,19 +37,31 @@ class GenerateMetaJob extends Job {
             return true;
         }
 
-        // Parse wikitext to HTML to get the actual rendered text
-        $parser = $services->getParser();
-        $parserOptions = \ParserOptions::newFromAnon();
-        $parserOutput = $parser->parse($content->getText(), $this->getTitle(), $parserOptions);
-        $html = $parserOutput->getText();
+        // Skip redirects
+        if ($this->getTitle()->isRedirect()) {
+            return true;
+        }
+
+        $text = $content->getText();
+
+        // Optimization: Avoid parsing the entire wikitext to HTML, which is extremely slow and memory-intensive.
+        // Instead, we strip out common wikitext noise and send the raw wikitext to the AI.
+        // Modern LLMs are very good at understanding raw wikitext.
+        
+        // Remove HTML comments
+        $text = preg_replace('/<!--.*?-->/s', '', $text);
+        // Remove references
+        $text = preg_replace('/<ref.*?>.*?<\/ref>/is', '', $text);
+        // Remove tables (simple heuristic)
+        $text = preg_replace('/\{\|.*?\|\}/s', '', $text);
         
         // Strip HTML tags and normalize whitespace
-        $text = strip_tags($html);
+        $text = strip_tags($text);
         $text = preg_replace('/\s+/', ' ', $text);
         $text = trim($text);
         
-        // Limit to 2000 chars to save tokens (usually enough for SEO context)
-        $text = mb_substr($text, 0, 2000);
+        // Limit to 3000 chars to save tokens and memory (usually enough for SEO context)
+        $text = mb_substr($text, 0, 3000);
 
         $provider = ProviderFactory::create();
         $tags = $provider->generate($text);
