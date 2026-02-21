@@ -1,8 +1,8 @@
 <?php
 namespace AISEOMeta;
 
-use MediaWiki\Hook\BeforePageDisplayHook;
-use MediaWiki\Page\Hook\PageSaveCompleteHook;
+use MediaWiki\Output\Hook\BeforePageDisplayHook;
+use MediaWiki\Storage\Hook\PageSaveCompleteHook;
 use MediaWiki\MediaWikiServices;
 
 class Hooks implements PageSaveCompleteHook, BeforePageDisplayHook {
