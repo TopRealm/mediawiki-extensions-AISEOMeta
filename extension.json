@@ -20,8 +20,7 @@
         ]
     },
     "ExtensionMessagesFiles": {
-        "AISEOMetaAlias": "AISEOMeta.alias.php",
-        "AISEOMetaMagic": "AISEOMeta.i18n.magic.php"
+        "AISEOMetaAlias": "AISEOMeta.alias.php"
     },
     "SpecialPages": {
         "AISEOMetaTest": "AISEOMeta\\SpecialAISEOMetaTest",
