@@ -1,7 +1,7 @@
 {
     "@metadata": {
         "authors": [
-            "Your Name"
+            "Zorua_Fox"
         ]
     },
     "aiseometa-desc": "Automatically generates SEO Meta tags for Wiki pages using AI (Gemini or OpenAI) via Job Queue.",

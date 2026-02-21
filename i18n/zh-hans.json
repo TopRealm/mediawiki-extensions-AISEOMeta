@@ -1,7 +1,7 @@
 {
     "@metadata": {
         "authors": [
-            "Your Name"
+            "Zorua_Fox"
         ]
     },
     "aiseometa-desc": "通过工作队列利用 AI (Gemini 或 OpenAI) 自动为 Wiki 页面生成 SEO Meta 标签。",

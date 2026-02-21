@@ -1,0 +1,30 @@
+{
+    "@metadata": {
+        "authors": [
+            "Zorua_Fox"
+        ]
+    },
+    "aiseometa-desc": "透過工作佇列利用 AI (Gemini 或 OpenAI) 自動為 Wiki 頁面產生 SEO Meta 標籤。",
+    "aiseometa": "AI SEO Meta 控制台",
+    "aiseometa-config-title": "目前設定",
+    "aiseometa-query-title": "查詢頁面狀態",
+    "aiseometa-page-title": "頁面標題",
+    "aiseometa-query-submit": "查詢",
+    "aiseometa-invalid-page": "無效或不存在的頁面。",
+    "aiseometa-result-title": "$1 的狀態",
+    "aiseometa-last-updated": "上次 AI 產生時間",
+    "aiseometa-never": "從未產生",
+    "aiseometa-no-tags": "該頁面沒有 AI 產生的 SEO 標籤。",
+    "aiseometa-regenerate-btn": "推送到工作佇列重新產生",
+    "aiseometa-job-pushed": "已成功將頁面 $1 的重新產生任務推送到佇列",
+    "aiseometa-batch-title": "批次重新產生",
+    "aiseometa-batch-pages": "頁面標題（每行一個）",
+    "aiseometa-batch-help": "輸入您想要重新產生 SEO 標籤的頁面標題，每行一個。",
+    "aiseometa-batch-submit": "批次推送到佇列",
+    "aiseometa-batch-success": "已成功將 $1 個任務推送到佇列。",
+    "aiseometa-test-title": "測試 AI 提供商",
+    "aiseometa-test-message": "測試訊息",
+    "aiseometa-test-submit": "發送測試",
+    "aiseometa-test-success": "AI 回應：",
+    "aiseometa-test-error": "AI 測試失敗：$1"
+}
