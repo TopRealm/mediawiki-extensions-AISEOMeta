@@ -42,7 +42,7 @@ class RegenerateSEOMeta extends Maintenance {
             $this->output("Finding all pages in target namespaces (" . implode(', ', $targetNamespaces) . ")...\n");
             $res = $dbr->select(
                 'page',
-                ['page_id', 'page_title', 'page_latest'],
+                ['page_id', 'page_namespace', 'page_title', 'page_latest'],
                 ['page_namespace' => $targetNamespaces, 'page_is_redirect' => 0],
                 __METHOD__
             );
