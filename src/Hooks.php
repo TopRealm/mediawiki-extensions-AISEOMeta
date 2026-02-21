@@ -69,7 +69,27 @@ class Hooks implements PageSaveCompleteHook, ParserAfterParseHook, OutputPagePar
 
     public function onOutputPageParserOutput($out, $parserOutput): void {
         $tagsJson = $parserOutput->getProperty('aiseometa_tags');
-        $aiTags = $tagsJson ? json_decode($tagsJson, true) : [];
+        
+        // If tags are not in ParserOutput (e.g., cache cleared but page not re-parsed yet),
+        // fallback to fetching from database (page_props)
+        if ($tagsJson === null) {
+            $title = $out->getTitle();
+            if ($title && $title->exists()) {
+                $config = MediaWikiServices::getInstance()->getMainConfig();
+                $targetNamespaces = $config->get('ASMTargetNamespaces');
+                
+                if (in_array($title->getNamespace(), $targetNamespaces)) {
+                    $metaManager = new MetaManager();
+                    $aiTags = $metaManager->getTagsFromProps($title->getArticleID());
+                } else {
+                    $aiTags = [];
+                }
+            } else {
+                $aiTags = [];
+            }
+        } else {
+            $aiTags = json_decode($tagsJson, true);
+        }
         
         $metaManager = new MetaManager();
         $customTags = $metaManager->getCustomTags();
