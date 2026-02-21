@@ -28,6 +28,18 @@ class SpecialAISEOMeta extends SpecialPage {
         $this->showBatchForm();
     }
 
+    private function getCodexMessage(string $type, string $text): string {
+        $icon = Html::element('span', ['class' => 'cdx-message__icon']);
+        $content = Html::rawElement('div', ['class' => 'cdx-message__content'], Html::element('p', [], $text));
+        
+        $role = $type === 'error' ? 'alert' : 'status';
+        
+        return Html::rawElement('div', [
+            'class' => "cdx-message cdx-message--block cdx-message--{$type}",
+            'role' => $role
+        ], $icon . $content);
+    }
+
     private function showConfig() {
         $out = $this->getOutput();
         $config = MediaWikiServices::getInstance()->getMainConfig();
@@ -86,7 +98,7 @@ class SpecialAISEOMeta extends SpecialPage {
         $out = $this->getOutput();
 
         if (!$title || !$title->exists()) {
-            $out->addHTML(Html::element('div', ['class' => 'errorbox'], $this->msg('aiseometa-invalid-page')->text()));
+            $out->addHTML($this->getCodexMessage('error', $this->msg('aiseometa-invalid-page')->text()));
             return true;
         }
 
@@ -114,7 +126,7 @@ class SpecialAISEOMeta extends SpecialPage {
         $regenerateUrl = $this->getPageTitle()->getLocalURL(['action' => 'regenerate', 'page' => $title->getPrefixedDBkey()]);
         $btn = Html::element('a', [
             'href' => $regenerateUrl,
-            'class' => 'cdx-button cdx-button--action-default cdx-button--weight-primary'
+            'class' => 'cdx-button cdx-button--action-progressive cdx-button--weight-primary'
         ], $this->msg('aiseometa-regenerate-btn')->text());
         
         $out->addHTML(Html::rawElement('p', [], $btn));
@@ -128,7 +140,7 @@ class SpecialAISEOMeta extends SpecialPage {
 
         if ($request->getVal('action') === 'regenerate' && $request->getVal('page')) {
             if ($this->pushJobForPage($request->getVal('page'))) {
-                $out->addHTML(Html::element('div', ['class' => 'successbox'], $this->msg('aiseometa-job-pushed', $request->getVal('page'))->text()));
+                $out->addHTML($this->getCodexMessage('success', $this->msg('aiseometa-job-pushed', $request->getVal('page'))->text()));
             }
         }
 
@@ -170,7 +182,7 @@ class SpecialAISEOMeta extends SpecialPage {
             }
         }
 
-        $out->addHTML(Html::element('div', ['class' => 'successbox'], $this->msg('aiseometa-batch-success', $count)->text()));
+        $out->addHTML($this->getCodexMessage('success', $this->msg('aiseometa-batch-success', $count)->text()));
         return true;
     }
 
