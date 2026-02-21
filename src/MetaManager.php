@@ -39,6 +39,12 @@ class MetaManager {
                 ],
                 __METHOD__
             );
+            
+            $title = \Title::newFromID($pageId);
+            if ($title) {
+                $page = MediaWikiServices::getInstance()->getWikiPageFactory()->newFromTitle($title);
+                $page->doPurge();
+            }
             return;
         }
 
@@ -65,6 +71,13 @@ class MetaManager {
             ],
             __METHOD__
         );
+
+        // Purge the page cache so the new tags are picked up by the parser
+        $title = \Title::newFromID($pageId);
+        if ($title) {
+            $page = MediaWikiServices::getInstance()->getWikiPageFactory()->newFromTitle($title);
+            $page->doPurge();
+        }
     }
 
     public function getUpdateTime(int $pageId): ?string {

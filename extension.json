@@ -37,7 +37,8 @@
     },
     "Hooks": {
         "PageSaveComplete": "AISEOMeta\\Hooks::onPageSaveComplete",
-        "BeforePageDisplay": "AISEOMeta\\Hooks::onBeforePageDisplay"
+        "ParserAfterParse": "AISEOMeta\\Hooks::onParserAfterParse",
+        "OutputPageParserOutput": "AISEOMeta\\Hooks::onOutputPageParserOutput"
     },
     "JobClasses": {
         "AISEOMetaGenerateJob": "AISEOMeta\\Job\\GenerateMetaJob"
