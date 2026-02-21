@@ -39,14 +39,22 @@ class OpenAIProvider implements AIProviderInterface {
 
             $client = $factory->make();
 
-            $response = $client->chat()->create([
+            $additionalParams = $config->get('ASMOpenAIAdditionalParams');
+            if (!is_array($additionalParams)) {
+                $additionalParams = [];
+            }
+
+            $requestParams = array_merge([
                 'model' => $model,
-                'messages' => [
-                    ['role' => 'system', 'content' => 'You are an SEO expert.'],
-                    ['role' => 'user', 'content' => $prompt]
-                ],
                 'response_format' => ['type' => 'json_object']
-            ]);
+            ], $additionalParams);
+
+            $requestParams['messages'] = [
+                ['role' => 'system', 'content' => 'You are an SEO expert.'],
+                ['role' => 'user', 'content' => $prompt]
+            ];
+
+            $response = $client->chat()->create($requestParams);
 
             if (isset($response->choices[0]->message->content)) {
                 $content = $response->choices[0]->message->content;

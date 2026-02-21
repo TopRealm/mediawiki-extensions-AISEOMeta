@@ -35,6 +35,12 @@ class SpecialAISEOMeta extends SpecialPage {
         $html .= "<li><b>Provider:</b> " . htmlspecialchars($provider) . "</li>";
         $html .= "<li><b>OpenAI Model:</b> " . htmlspecialchars($config->get('ASMOpenAIModel')) . "</li>";
         $html .= "<li><b>OpenAI Key:</b> " . $openAiKey . "</li>";
+        
+        $additionalParams = $config->get('ASMOpenAIAdditionalParams');
+        if (is_array($additionalParams) && !empty($additionalParams)) {
+            $html .= "<li><b>OpenAI Additional Params:</b> <pre>" . htmlspecialchars(json_encode($additionalParams, JSON_UNESCAPED_UNICODE)) . "</pre></li>";
+        }
+
         $html .= "<li><b>Gemini Model:</b> " . htmlspecialchars($config->get('ASMGeminiModel')) . "</li>";
         $html .= "<li><b>Gemini Key:</b> " . $geminiKey . "</li>";
         $html .= "</ul>";

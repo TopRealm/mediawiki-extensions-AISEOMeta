@@ -39,6 +39,7 @@ You can configure the extension by adding the following variables to your `Local
 * `$wgASMOpenAIEndpoint`: The endpoint for the OpenAI compatible API. Default is `'https://api.openai.com/v1/chat/completions'`.
 * `$wgASMOpenAIKey`: Your OpenAI API Key.
 * `$wgASMOpenAIModel`: The OpenAI model to use. Default is `'gpt-3.5-turbo'`.
+* `$wgASMOpenAIAdditionalParams`: Additional parameters to pass to the OpenAI compatible API (e.g., `temperature`, `max_tokens`, `enable_search`). Default is `['temperature' => 0.3, 'max_tokens' => 512]`.
 
 ### Gemini Settings
 * `$wgASMGeminiKey`: Your Gemini API Key.
@@ -51,6 +52,12 @@ You can configure the extension by adding the following variables to your `Local
 $wgASMProvider = 'openai';
 $wgASMOpenAIKey = 'your-openai-api-key';
 $wgASMOpenAIModel = 'gpt-4-turbo';
+// Optional: Add extra parameters for OpenAI compatible APIs
+// $wgASMOpenAIAdditionalParams = [
+//     'temperature' => 0.3,
+//     'max_tokens' => 512,
+//     'enable_search' => true
+// ];
 
 // Or use Gemini
 // $wgASMProvider = 'gemini';

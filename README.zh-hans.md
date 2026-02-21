@@ -39,6 +39,7 @@ AISEOMeta 是一个 MediaWiki 扩展，旨在利用 AI（Gemini 或 OpenAI 兼�
 * `$wgASMOpenAIEndpoint`: OpenAI 兼容 API 的端点。默认值为 `'https://api.openai.com/v1/chat/completions'`。
 * `$wgASMOpenAIKey`: 您的 OpenAI API 密钥。
 * `$wgASMOpenAIModel`: 要使用的 OpenAI 模型。默认值为 `'gpt-3.5-turbo'`。
+* `$wgASMOpenAIAdditionalParams`: 传递给 OpenAI 兼容 API 的额外参数（例如 `temperature`, `max_tokens`, `enable_search` 等）。默认值为 `['temperature' => 0.3, 'max_tokens' => 512]`。
 
 ### Gemini 设置
 * `$wgASMGeminiKey`: 您的 Gemini API 密钥。
@@ -51,6 +52,12 @@ AISEOMeta 是一个 MediaWiki 扩展，旨在利用 AI（Gemini 或 OpenAI 兼�
 $wgASMProvider = 'openai';
 $wgASMOpenAIKey = 'your-openai-api-key';
 $wgASMOpenAIModel = 'gpt-4-turbo';
+// 可选：为 OpenAI 兼容 API 添加额外参数
+// $wgASMOpenAIAdditionalParams = [
+//     'temperature' => 0.3,
+//     'max_tokens' => 512,
+//     'enable_search' => true
+// ];
 
 // 或者使用 Gemini
 // $wgASMProvider = 'gemini';

@@ -50,6 +50,13 @@
             "value": "gpt-3.5-turbo",
             "description": "OpenAI 模型名称"
         },
+        "ASMOpenAIAdditionalParams": {
+            "value": {
+                "temperature": 0.3,
+                "max_tokens": 512
+            },
+            "description": "OpenAI 兼容 API 的额外调用参数 (如 temperature, max_tokens, enable_search 等)"
+        },
         "ASMGeminiKey": {
             "value": "",
             "description": "Gemini API Key"
