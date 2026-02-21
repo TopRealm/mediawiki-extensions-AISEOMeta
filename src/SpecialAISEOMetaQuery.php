@@ -4,6 +4,8 @@ namespace AISEOMeta;
 use HTMLForm;
 use Title;
 use Html;
+use AISEOMeta\Job\GenerateMetaJob;
+use MediaWiki\MediaWikiServices;
 
 class SpecialAISEOMetaQuery extends SpecialAISEOMetaBase {
     public function __construct() {
@@ -17,11 +19,22 @@ class SpecialAISEOMetaQuery extends SpecialAISEOMetaBase {
 
         $this->getOutput()->addModuleStyles(['codex.styles-all']);
 
+        $request = $this->getRequest();
+        if ($request->getVal('action') === 'regenerate' && $request->getVal('page')) {
+            if ($this->pushJobForPage($request->getVal('page'))) {
+                $this->getOutput()->addHTML($this->getCodexMessage('success', $this->msg('aiseometa-job-pushed', $request->getVal('page'))->text()));
+            }
+            $this->showQueryForm();
+            $this->processQueryForm(['pagetitle' => $request->getVal('page')]);
+            return;
+        }
+
         $this->showQueryForm();
     }
 
     private function showQueryForm() {
         $out = $this->getOutput();
+        $request = $this->getRequest();
 
         $out->addHTML(Html::element('h2', [], $this->msg('aiseometa-query-title')->text()));
 
@@ -30,13 +43,14 @@ class SpecialAISEOMetaQuery extends SpecialAISEOMetaBase {
                 'type' => 'text',
                 'label-message' => 'aiseometa-page-title',
                 'required' => true,
+                'default' => $request->getVal('page', ''),
             ]
         ];
 
         $htmlForm = HTMLForm::factory('codex', $formDescriptor, $this->getContext(), 'queryform');
         $htmlForm->setSubmitTextMsg('aiseometa-query-submit');
         $htmlForm->setSubmitCallback([$this, 'processQueryForm']);
-        $htmlForm->show();
+        $htmlForm->showAlways();
     }
 
     public function processQueryForm($formData) {
@@ -70,14 +84,38 @@ class SpecialAISEOMetaQuery extends SpecialAISEOMetaBase {
             $out->addHTML(Html::element('p', [], $this->msg('aiseometa-no-tags')->text()));
         }
 
-        $regenerateUrl = $this->getPageTitle()->getLocalURL(['action' => 'regenerate', 'page' => $title->getPrefixedDBkey()]);
-        $btn = Html::element('a', [
-            'href' => $regenerateUrl,
+        $form = Html::openElement('form', [
+            'method' => 'get',
+            'action' => wfScript()
+        ]);
+        $form .= Html::hidden('title', $this->getPageTitle()->getPrefixedDBkey());
+        $form .= Html::hidden('action', 'regenerate');
+        $form .= Html::hidden('page', $title->getPrefixedDBkey());
+        $form .= Html::element('button', [
+            'type' => 'submit',
             'class' => 'cdx-button cdx-button--action-progressive cdx-button--weight-primary'
         ], $this->msg('aiseometa-regenerate-btn')->text());
+        $form .= Html::closeElement('form');
         
-        $out->addHTML(Html::rawElement('p', [], $btn));
+        $out->addHTML(Html::rawElement('p', [], $form));
 
+        return true;
+    }
+
+    private function pushJobForPage(string $titleText): bool {
+        $title = Title::newFromText($titleText);
+        if (!$title || !$title->exists()) {
+            return false;
+        }
+
+        $job = new GenerateMetaJob(
+            $title,
+            [
+                'pageId' => $title->getArticleID(),
+                'revId' => $title->getLatestRevID()
+            ]
+        );
+        MediaWikiServices::getInstance()->getJobQueueGroup()->push($job);
         return true;
     }
 }

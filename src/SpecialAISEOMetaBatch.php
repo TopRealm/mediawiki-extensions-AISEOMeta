@@ -26,12 +26,6 @@ class SpecialAISEOMetaBatch extends SpecialAISEOMetaBase {
         $out = $this->getOutput();
         $request = $this->getRequest();
 
-        if ($request->getVal('action') === 'regenerate' && $request->getVal('page')) {
-            if ($this->pushJobForPage($request->getVal('page'))) {
-                $out->addHTML($this->getCodexMessage('success', $this->msg('aiseometa-job-pushed', $request->getVal('page'))->text()));
-            }
-        }
-
         $out->addHTML(Html::element('h2', [], $this->msg('aiseometa-batch-title')->text()));
 
         $formDescriptor = [
@@ -47,7 +41,7 @@ class SpecialAISEOMetaBatch extends SpecialAISEOMetaBase {
         $htmlForm = HTMLForm::factory('codex', $formDescriptor, $this->getContext(), 'batchform');
         $htmlForm->setSubmitTextMsg('aiseometa-batch-submit');
         $htmlForm->setSubmitCallback([$this, 'processBatchForm']);
-        $htmlForm->show();
+        $htmlForm->showAlways();
     }
 
     public function processBatchForm($formData) {

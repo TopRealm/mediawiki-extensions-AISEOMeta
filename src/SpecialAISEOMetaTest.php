@@ -68,7 +68,7 @@ class SpecialAISEOMetaTest extends SpecialAISEOMetaBase {
         $htmlForm = HTMLForm::factory('codex', $formDescriptor, $this->getContext(), 'testform');
         $htmlForm->setSubmitTextMsg('aiseometa-test-submit');
         $htmlForm->setSubmitCallback([$this, 'processTestForm']);
-        $htmlForm->show();
+        $htmlForm->showAlways();
     }
 
     public function processTestForm($formData) {
