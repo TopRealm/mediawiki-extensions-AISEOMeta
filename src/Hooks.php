@@ -5,6 +5,7 @@ use MediaWiki\Hook\ParserAfterParseHook;
 use MediaWiki\Output\Hook\OutputPageParserOutputHook;
 use MediaWiki\Storage\Hook\PageSaveCompleteHook;
 use MediaWiki\MediaWikiServices;
+use Html;
 
 class Hooks implements PageSaveCompleteHook, ParserAfterParseHook, OutputPageParserOutputHook {
     
@@ -99,6 +100,12 @@ class Hooks implements PageSaveCompleteHook, ParserAfterParseHook, OutputPagePar
         foreach ($mergedTags as $name => $content) {
             if (!empty($content)) {
                 $out->addMeta($name, $content);
+                
+                // Automatically add Open Graph and Twitter Card descriptions
+                if ($name === 'description') {
+                    $out->addHeadItem('og:description', Html::element('meta', ['property' => 'og:description', 'content' => $content]));
+                    $out->addMeta('twitter:description', $content);
+                }
             }
         }
     }

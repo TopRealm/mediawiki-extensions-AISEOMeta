@@ -80,7 +80,7 @@
             "description": "Gemini 模型名称"
         },
         "ASMPromptTemplate": {
-            "value": "Extract SEO description (max 160 chars) and keywords (comma-separated) from the text. Output JSON only: {\"description\":\"\",\"keywords\":\"\"}. Text: {text}",
+            "value": "Extract an SEO-optimized description (max 160 chars) from the text. Output JSON only: {\"description\":\"\"}. Text: {text}",
             "description": "发送给 AI 的 Prompt 模板"
         }
     },

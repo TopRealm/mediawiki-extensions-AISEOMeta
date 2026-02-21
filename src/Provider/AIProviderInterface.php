@@ -5,7 +5,7 @@ interface AIProviderInterface {
     /**
      * Generate SEO tags from text
      * @param string $text
-     * @return array Associative array of tags, e.g., ['description' => '...', 'keywords' => '...']
+     * @return array Associative array of tags, e.g., ['description' => '...']
      */
     public function generate(string $text): array;
 
