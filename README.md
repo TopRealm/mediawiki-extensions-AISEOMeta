@@ -32,6 +32,7 @@ AISEOMeta is a MediaWiki extension that automatically generates SEO Meta tags fo
 You can configure the extension by adding the following variables to your `LocalSettings.php`:
 
 ### General Settings
+* `$wgASMTargetNamespaces`: An array of namespace IDs where the extension should generate and display SEO tags. Default is `[ 0 ]` (Main namespace).
 * `$wgASMProvider`: Choose the AI provider. Valid options are `'openai'` or `'gemini'`. Default is `'openai'`.
 * `$wgASMPromptTemplate`: The prompt template sent to the AI. Use `{text}` as a placeholder for the page content.
 

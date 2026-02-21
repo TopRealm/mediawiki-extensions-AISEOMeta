@@ -32,6 +32,7 @@ AISEOMeta 是一个 MediaWiki 扩展，旨在利用 AI（Gemini 或 OpenAI 兼�
 您可以通过在 `LocalSettings.php` 中添加以下变量来配置扩展：
 
 ### 通用设置
+* `$wgASMTargetNamespaces`: 允许生成和显示 SEO 标签的命名空间 ID 数组。默认值为 `[ 0 ]`（主命名空间）。
 * `$wgASMProvider`: 选择 AI 提供商。有效选项为 `'openai'` 或 `'gemini'`。默认值为 `'openai'`。
 * `$wgASMPromptTemplate`: 发送给 AI 的提示词模板。使用 `{text}` 作为页面内容的占位符。
 

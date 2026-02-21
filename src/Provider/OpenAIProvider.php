@@ -88,4 +88,48 @@ class OpenAIProvider implements AIProviderInterface {
 
         return [];
     }
+
+    public function testConnection(string $message): string {
+        $config = MediaWikiServices::getInstance()->getMainConfig();
+        $key = $config->get('ASMOpenAIKey');
+        $model = $config->get('ASMOpenAIModel');
+        $endpoint = $config->get('ASMOpenAIEndpoint');
+
+        if (empty($key)) {
+            throw new \Exception('OpenAI API key is not configured.');
+        }
+
+        $factory = OpenAI::factory()->withApiKey($key);
+        
+        if (!empty($endpoint) && $endpoint !== 'https://api.openai.com/v1/chat/completions') {
+            $baseUri = preg_replace('#/chat/completions$#', '', $endpoint);
+            $factory = $factory->withBaseUri($baseUri);
+        }
+
+        $client = $factory->make();
+
+        $additionalParams = $config->get('ASMOpenAIAdditionalParams');
+        if (!is_array($additionalParams)) {
+            $additionalParams = [];
+        }
+
+        $requestParams = array_merge([
+            'model' => $model,
+        ], $additionalParams);
+
+        // Remove response_format for simple text test
+        unset($requestParams['response_format']);
+
+        $requestParams['messages'] = [
+            ['role' => 'user', 'content' => $message]
+        ];
+
+        $response = $client->chat()->create($requestParams);
+
+        if (isset($response->choices[0]->message->content)) {
+            return $response->choices[0]->message->content;
+        }
+
+        throw new \Exception('Unexpected OpenAI API response structure.');
+    }
 }

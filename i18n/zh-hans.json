@@ -21,5 +21,10 @@
     "aiseometa-batch-pages": "页面标题（每行一个）",
     "aiseometa-batch-help": "输入您想要重新生成 SEO 标签的页面标题，每行一个。",
     "aiseometa-batch-submit": "批量推送到队列",
-    "aiseometa-batch-success": "已成功将 $1 个任务推送到队列。"
+    "aiseometa-batch-success": "已成功将 $1 个任务推送到队列。",
+    "aiseometa-test-title": "测试 AI 提供商",
+    "aiseometa-test-message": "测试消息",
+    "aiseometa-test-submit": "发送测试",
+    "aiseometa-test-success": "AI 响应：",
+    "aiseometa-test-error": "AI 测试失败：$1"
 }

@@ -21,5 +21,10 @@
     "aiseometa-batch-pages": "Page Titles (one per line)",
     "aiseometa-batch-help": "Enter the titles of the pages you want to regenerate SEO tags for, one per line.",
     "aiseometa-batch-submit": "Batch Push to Queue",
-    "aiseometa-batch-success": "Successfully pushed $1 jobs to the queue."
+    "aiseometa-batch-success": "Successfully pushed $1 jobs to the queue.",
+    "aiseometa-test-title": "Test AI Provider",
+    "aiseometa-test-message": "Test Message",
+    "aiseometa-test-submit": "Send Test",
+    "aiseometa-test-success": "AI Response:",
+    "aiseometa-test-error": "AI Test Failed: $1"
 }

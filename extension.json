@@ -34,6 +34,10 @@
         "AISEOMetaGenerateJob": "AISEOMeta\\Job\\GenerateMetaJob"
     },
     "config": {
+        "ASMTargetNamespaces": {
+            "value": [ 0 ],
+            "description": "允许生成 SEO 标签的命名空间 ID 数组 (默认 0 为主命名空间)"
+        },
         "ASMProvider": {
             "value": "openai",
             "description": "选择 AI 提供商: 'openai' 或 'gemini'"

@@ -15,8 +15,11 @@ class Hooks implements PageSaveCompleteHook, BeforePageDisplayHook {
         $revisionRecord,
         $editResult
     ) {
-        // Only process main namespace
-        if ($wikiPage->getTitle()->getNamespace() !== NS_MAIN) {
+        $config = MediaWikiServices::getInstance()->getMainConfig();
+        $targetNamespaces = $config->get('ASMTargetNamespaces');
+
+        // Only process configured namespaces
+        if (!in_array($wikiPage->getTitle()->getNamespace(), $targetNamespaces, true)) {
             return true;
         }
 
@@ -35,7 +38,14 @@ class Hooks implements PageSaveCompleteHook, BeforePageDisplayHook {
 
     public function onBeforePageDisplay($out, $skin): void {
         $title = $out->getTitle();
-        if (!$title || $title->getNamespace() !== NS_MAIN) {
+        if (!$title) {
+            return;
+        }
+
+        $config = MediaWikiServices::getInstance()->getMainConfig();
+        $targetNamespaces = $config->get('ASMTargetNamespaces');
+
+        if (!in_array($title->getNamespace(), $targetNamespaces, true)) {
             return;
         }
 

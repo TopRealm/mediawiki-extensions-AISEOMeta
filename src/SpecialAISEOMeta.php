@@ -24,6 +24,7 @@ class SpecialAISEOMeta extends SpecialPage {
         ]);
 
         $this->showConfig();
+        $this->showTestForm();
         $this->showQueryForm();
         $this->showBatchForm();
     }
@@ -64,7 +65,60 @@ class SpecialAISEOMeta extends SpecialPage {
         $listItems .= Html::rawElement('li', [], Html::element('b', [], 'Gemini Model: ') . htmlspecialchars($config->get('ASMGeminiModel')));
         $listItems .= Html::rawElement('li', [], Html::element('b', [], 'Gemini Key: ') . $geminiKey);
 
+        $targetNamespaces = $config->get('ASMTargetNamespaces');
+        $listItems .= Html::rawElement('li', [], Html::element('b', [], 'Target Namespaces: ') . htmlspecialchars(implode(', ', $targetNamespaces)));
+
         $out->addHTML(Html::rawElement('ul', [], $listItems));
+    }
+
+    private function showTestForm() {
+        $out = $this->getOutput();
+
+        $out->addHTML(Html::element('h2', [], $this->msg('aiseometa-test-title')->text()));
+
+        $formDescriptor = [
+            'testmessage' => [
+                'type' => 'text',
+                'label-message' => 'aiseometa-test-message',
+                'default' => 'Hello, are you working?',
+                'required' => true,
+            ],
+            'action_type' => [
+                'type' => 'hidden',
+                'default' => 'test'
+            ]
+        ];
+
+        $htmlForm = HTMLForm::factory('codex', $formDescriptor, $this->getContext(), 'testform');
+        $htmlForm->setSubmitTextMsg('aiseometa-test-submit');
+        $htmlForm->setSubmitCallback([$this, 'processTestForm']);
+        $htmlForm->showAlways();
+    }
+
+    public function processTestForm($formData) {
+        if (($formData['action_type'] ?? '') !== 'test') return false;
+
+        $message = $formData['testmessage'];
+        $out = $this->getOutput();
+
+        $config = MediaWikiServices::getInstance()->getMainConfig();
+        $providerName = $config->get('ASMProvider');
+
+        try {
+            if ($providerName === 'gemini') {
+                $provider = new \AISEOMeta\Provider\GeminiProvider();
+            } else {
+                $provider = new \AISEOMeta\Provider\OpenAIProvider();
+            }
+
+            $response = $provider->testConnection($message);
+            
+            $out->addHTML($this->getCodexMessage('success', $this->msg('aiseometa-test-success')->text() . ' ' . htmlspecialchars($response)));
+        } catch (\Exception $e) {
+            $out->addHTML($this->getCodexMessage('error', $this->msg('aiseometa-test-error', $e->getMessage())->text()));
+        }
+
+        return true;
     }
 
     private function showQueryForm() {
@@ -87,7 +141,7 @@ class SpecialAISEOMeta extends SpecialPage {
         $htmlForm = HTMLForm::factory('codex', $formDescriptor, $this->getContext(), 'queryform');
         $htmlForm->setSubmitTextMsg('aiseometa-query-submit');
         $htmlForm->setSubmitCallback([$this, 'processQueryForm']);
-        $htmlForm->show();
+        $htmlForm->showAlways();
     }
 
     public function processQueryForm($formData) {
@@ -163,7 +217,7 @@ class SpecialAISEOMeta extends SpecialPage {
         $htmlForm = HTMLForm::factory('codex', $formDescriptor, $this->getContext(), 'batchform');
         $htmlForm->setSubmitTextMsg('aiseometa-batch-submit');
         $htmlForm->setSubmitCallback([$this, 'processBatchForm']);
-        $htmlForm->show();
+        $htmlForm->showAlways();
     }
 
     public function processBatchForm($formData) {

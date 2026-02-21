@@ -62,4 +62,23 @@ class GeminiProvider implements AIProviderInterface {
 
         return [];
     }
+
+    public function testConnection(string $message): string {
+        $config = MediaWikiServices::getInstance()->getMainConfig();
+        $key = $config->get('ASMGeminiKey');
+        $model = $config->get('ASMGeminiModel');
+
+        if (empty($key)) {
+            throw new \Exception('Gemini API key is not configured.');
+        }
+
+        $client = \Gemini::client($key);
+        $response = $client->generativeModel(model: $model)->generateContent($message);
+
+        if ($response && $response->text()) {
+            return $response->text();
+        }
+
+        throw new \Exception('Unexpected Gemini API response structure.');
+    }
 }

@@ -10,7 +10,7 @@ class RegenerateSEOMeta extends Maintenance {
     public function __construct() {
         parent::__construct();
         $this->addDescription('Regenerate AI SEO meta tags by pushing jobs to the queue.');
-        $this->addOption('all', 'Regenerate for all pages in main namespace', false, false);
+        $this->addOption('all', 'Regenerate for all pages in configured target namespaces', false, false);
         $this->addOption('page', 'Regenerate for a specific page title', false, true);
         $this->addOption('force', 'Force regeneration even if tags already exist', false, false);
         $this->requireExtension('AISEOMeta');
@@ -36,11 +36,14 @@ class RegenerateSEOMeta extends Maintenance {
             $this->pushJob($title, $metaManager, $force);
             $this->output("Job pushed for page: {$title->getPrefixedText()}\n");
         } else {
-            $this->output("Finding all pages in main namespace...\n");
+            $config = \MediaWiki\MediaWikiServices::getInstance()->getMainConfig();
+            $targetNamespaces = $config->get('ASMTargetNamespaces');
+            
+            $this->output("Finding all pages in target namespaces (" . implode(', ', $targetNamespaces) . ")...\n");
             $res = $dbr->select(
                 'page',
                 ['page_id', 'page_title', 'page_latest'],
-                ['page_namespace' => NS_MAIN, 'page_is_redirect' => 0],
+                ['page_namespace' => $targetNamespaces, 'page_is_redirect' => 0],
                 __METHOD__
             );
 
