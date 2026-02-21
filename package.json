@@ -2,7 +2,7 @@
 	"name": "AISEOMeta",
 	"version": "1.0.0",
 	"description": "Automatically generates SEO Meta tags for Wiki pages using AI (Gemini or OpenAI) via Job Queue.",
-	"author": "海屿有燕 <zorua@vip.qq.com>",
+	"author": "Haiyu Youyan (海屿有燕) <zorua@vip.qq.com>",
 	"license": "MIT",
 	"private": true,
 	"scripts": {
