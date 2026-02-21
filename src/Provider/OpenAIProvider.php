@@ -1,0 +1,77 @@
+<?php
+namespace AISEOMeta\Provider;
+
+use MediaWiki\MediaWikiServices;
+use Psr\Log\LoggerInterface;
+use OpenAI;
+
+class OpenAIProvider implements AIProviderInterface {
+    private LoggerInterface $logger;
+
+    public function __construct() {
+        $this->logger = MediaWikiServices::getInstance()->getLogger('AISEOMeta');
+    }
+
+    public function generate(string $text): array {
+        $config = MediaWikiServices::getInstance()->getMainConfig();
+        $key = $config->get('ASMOpenAIKey');
+        $model = $config->get('ASMOpenAIModel');
+        $promptTemplate = $config->get('ASMPromptTemplate');
+        $endpoint = $config->get('ASMOpenAIEndpoint');
+
+        if (empty($key)) {
+            $this->logger->error('OpenAI API key is not configured.');
+            return [];
+        }
+
+        $prompt = str_replace('{text}', $text, $promptTemplate);
+
+        try {
+            // Configure custom endpoint if provided (useful for OpenAI-compatible APIs)
+            $factory = OpenAI::factory()
+                ->withApiKey($key);
+            
+            if (!empty($endpoint) && $endpoint !== 'https://api.openai.com/v1/chat/completions') {
+                // Extract base URI from endpoint (e.g., https://api.openai.com/v1)
+                $baseUri = preg_replace('#/chat/completions$#', '', $endpoint);
+                $factory = $factory->withBaseUri($baseUri);
+            }
+
+            $client = $factory->make();
+
+            $response = $client->chat()->create([
+                'model' => $model,
+                'messages' => [
+                    ['role' => 'system', 'content' => 'You are an SEO expert.'],
+                    ['role' => 'user', 'content' => $prompt]
+                ],
+                'response_format' => ['type' => 'json_object']
+            ]);
+
+            if (isset($response->choices[0]->message->content)) {
+                $content = $response->choices[0]->message->content;
+                $tags = json_decode($content, true);
+                
+                if (json_last_error() !== JSON_ERROR_NONE) {
+                    $this->logger->error('Failed to decode JSON from OpenAI response content: {error}', [
+                        'error' => json_last_error_msg(),
+                        'content' => $content
+                    ]);
+                    return [];
+                }
+                
+                return is_array($tags) ? $tags : [];
+            }
+
+            $this->logger->warning('Unexpected OpenAI API response structure.');
+
+        } catch (\Exception $e) {
+            $this->logger->error('Exception during OpenAI API call: {message}', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+        }
+
+        return [];
+    }
+}

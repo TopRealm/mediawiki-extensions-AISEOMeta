@@ -1,0 +1,67 @@
+{
+    "name": "AISEOMeta",
+    "version": "1.0.0",
+    "author": [
+        "Your Name"
+    ],
+    "url": "https://www.mediawiki.org/wiki/Extension:AISEOMeta",
+    "descriptionmsg": "aiseometa-desc",
+    "license-name": "MIT",
+    "type": "other",
+    "requires": {
+        "MediaWiki": ">= 1.39.0"
+    },
+    "AutoloadNamespaces": {
+        "AISEOMeta\\": "src/"
+    },
+    "MessagesDirs": {
+        "AISEOMeta": [
+            "i18n"
+        ]
+    },
+    "ExtensionMessagesFiles": {
+        "AISEOMetaAlias": "AISEOMeta.alias.php",
+        "AISEOMetaMagic": "AISEOMeta.i18n.magic.php"
+    },
+    "SpecialPages": {
+        "AISEOMeta": "AISEOMeta\\SpecialAISEOMeta"
+    },
+    "Hooks": {
+        "PageSaveComplete": "AISEOMeta\\Hooks::onPageSaveComplete",
+        "BeforePageDisplay": "AISEOMeta\\Hooks::onBeforePageDisplay"
+    },
+    "JobClasses": {
+        "AISEOMetaGenerateJob": "AISEOMeta\\Job\\GenerateMetaJob"
+    },
+    "config": {
+        "ASMProvider": {
+            "value": "openai",
+            "description": "选择 AI 提供商: 'openai' 或 'gemini'"
+        },
+        "ASMOpenAIEndpoint": {
+            "value": "https://api.openai.com/v1/chat/completions",
+            "description": "OpenAI 兼容 API 的端点"
+        },
+        "ASMOpenAIKey": {
+            "value": "",
+            "description": "OpenAI API Key"
+        },
+        "ASMOpenAIModel": {
+            "value": "gpt-3.5-turbo",
+            "description": "OpenAI 模型名称"
+        },
+        "ASMGeminiKey": {
+            "value": "",
+            "description": "Gemini API Key"
+        },
+        "ASMGeminiModel": {
+            "value": "gemini-2.0-flash",
+            "description": "Gemini 模型名称"
+        },
+        "ASMPromptTemplate": {
+            "value": "Please generate SEO meta tags (description, keywords) for the following wiki page text. Return ONLY a valid JSON object with keys 'description' and 'keywords'. Text: {text}",
+            "description": "发送给 AI 的 Prompt 模板"
+        }
+    },
+    "manifest_version": 2
+}

@@ -1,0 +1,25 @@
+{
+    "@metadata": {
+        "authors": [
+            "Your Name"
+        ]
+    },
+    "aiseometa-desc": "通过工作队列利用 AI (Gemini 或 OpenAI) 自动为 Wiki 页面生成 SEO Meta 标签。",
+    "aiseometa": "AI SEO Meta 控制台",
+    "aiseometa-config-title": "当前配置",
+    "aiseometa-query-title": "查询页面状态",
+    "aiseometa-page-title": "页面标题",
+    "aiseometa-query-submit": "查询",
+    "aiseometa-invalid-page": "无效或不存在的页面。",
+    "aiseometa-result-title": "$1 的状态",
+    "aiseometa-last-updated": "上次 AI 生成时间",
+    "aiseometa-never": "从未生成",
+    "aiseometa-no-tags": "该页面没有 AI 生成的 SEO 标签。",
+    "aiseometa-regenerate-btn": "推送到工作队列重新生成",
+    "aiseometa-job-pushed": "已成功将页面 $1 的重新生成任务推送到队列",
+    "aiseometa-batch-title": "批量重新生成",
+    "aiseometa-batch-pages": "页面标题（每行一个）",
+    "aiseometa-batch-help": "输入您想要重新生成 SEO 标签的页面标题，每行一个。",
+    "aiseometa-batch-submit": "批量推送到队列",
+    "aiseometa-batch-success": "已成功将 $1 个任务推送到队列。"
+}

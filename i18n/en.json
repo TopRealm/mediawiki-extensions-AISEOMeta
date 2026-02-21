@@ -1,0 +1,25 @@
+{
+    "@metadata": {
+        "authors": [
+            "Your Name"
+        ]
+    },
+    "aiseometa-desc": "Automatically generates SEO Meta tags for Wiki pages using AI (Gemini or OpenAI) via Job Queue.",
+    "aiseometa": "AI SEO Meta Console",
+    "aiseometa-config-title": "Current Configuration",
+    "aiseometa-query-title": "Query Page Status",
+    "aiseometa-page-title": "Page Title",
+    "aiseometa-query-submit": "Query",
+    "aiseometa-invalid-page": "Invalid or non-existent page.",
+    "aiseometa-result-title": "Status for: $1",
+    "aiseometa-last-updated": "Last AI Generation",
+    "aiseometa-never": "Never",
+    "aiseometa-no-tags": "No AI SEO tags found for this page.",
+    "aiseometa-regenerate-btn": "Push to Job Queue to Regenerate",
+    "aiseometa-job-pushed": "Successfully pushed regeneration job for page: $1",
+    "aiseometa-batch-title": "Batch Regenerate",
+    "aiseometa-batch-pages": "Page Titles (one per line)",
+    "aiseometa-batch-help": "Enter the titles of the pages you want to regenerate SEO tags for, one per line.",
+    "aiseometa-batch-submit": "Batch Push to Queue",
+    "aiseometa-batch-success": "Successfully pushed $1 jobs to the queue."
+}

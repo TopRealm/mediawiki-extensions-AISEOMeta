@@ -1,0 +1,16 @@
+{
+	"name": "AISEOMeta",
+	"version": "1.0.0",
+	"description": "Automatically generates SEO Meta tags for Wiki pages using AI (Gemini or OpenAI) via Job Queue.",
+	"license": "MIT",
+	"private": true,
+	"scripts": {
+		"test": "npm run eslint && npm run stylelint",
+		"eslint": "eslint --cache --max-warnings 0 .",
+		"stylelint": "stylelint \"**/*.{css,less}\""
+	},
+	"devDependencies": {
+		"eslint-config-wikimedia": "0.28.2",
+		"stylelint-config-wikimedia": "0.17.2"
+	}
+}

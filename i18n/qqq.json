@@ -1,0 +1,25 @@
+{
+    "@metadata": {
+        "authors": [
+            "Your Name"
+        ]
+    },
+    "aiseometa-desc": "{{desc|name=AISEOMeta|url=https://www.mediawiki.org/wiki/Extension:AISEOMeta}}",
+    "aiseometa": "Title of the special page",
+    "aiseometa-config-title": "Header for the configuration section",
+    "aiseometa-query-title": "Header for the query section",
+    "aiseometa-page-title": "Label for the page title input field",
+    "aiseometa-query-submit": "Button text to submit the query",
+    "aiseometa-invalid-page": "Error message when an invalid page is entered",
+    "aiseometa-result-title": "Header for the query result. Parameters:\n* $1 - The page title",
+    "aiseometa-last-updated": "Label for the last updated time",
+    "aiseometa-never": "Text shown when the page has never been processed",
+    "aiseometa-no-tags": "Text shown when no tags are found",
+    "aiseometa-regenerate-btn": "Button text to regenerate tags",
+    "aiseometa-job-pushed": "Success message when a job is pushed. Parameters:\n* $1 - The page title",
+    "aiseometa-batch-title": "Header for the batch regenerate section",
+    "aiseometa-batch-pages": "Label for the batch pages textarea",
+    "aiseometa-batch-help": "Help text for the batch pages textarea",
+    "aiseometa-batch-submit": "Button text to submit the batch job",
+    "aiseometa-batch-success": "Success message for batch jobs. Parameters:\n* $1 - Number of jobs pushed"
+}
