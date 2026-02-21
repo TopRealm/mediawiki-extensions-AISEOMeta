@@ -1,7 +1,13 @@
 {
-	"name": "yourname/aiseometa",
+	"name": "zorua/aiseometa",
 	"description": "Automatically generates SEO Meta tags for Wiki pages using AI (Gemini or OpenAI) via Job Queue.",
 	"license": "MIT",
+	"authors": [
+		{
+			"name": "海屿有燕",
+			"email": "zorua@vip.qq.com"
+		}
+	],
 	"type": "mediawiki-extension",
 	"require": {
 		"php": ">=8.1.0",
