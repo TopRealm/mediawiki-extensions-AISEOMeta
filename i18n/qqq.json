@@ -1,11 +1,14 @@
 {
     "@metadata": {
         "authors": [
-            "Your Name"
+            "Zorua_Fox"
         ]
     },
     "aiseometa-desc": "{{desc|name=AISEOMeta|url=https://www.mediawiki.org/wiki/Extension:AISEOMeta}}",
-    "aiseometa": "Title of the special page",
+    "specialpages-group-aiseometa": "Name of the special page group for AI SEO Meta",
+    "aiseometatest": "Title of the AISEOMetaTest special page",
+    "aiseometaquery": "Title of the AISEOMetaQuery special page",
+    "aiseometabatch": "Title of the AISEOMetaBatch special page",
     "aiseometa-config-title": "Header for the configuration section",
     "aiseometa-query-title": "Header for the query section",
     "aiseometa-page-title": "Label for the page title input field",
@@ -21,5 +24,12 @@
     "aiseometa-batch-pages": "Label for the batch pages textarea",
     "aiseometa-batch-help": "Help text for the batch pages textarea",
     "aiseometa-batch-submit": "Button text to submit the batch job",
-    "aiseometa-batch-success": "Success message for batch jobs. Parameters:\n* $1 - Number of jobs pushed"
+    "aiseometa-batch-success": "Success message for batch jobs. Parameters:\n* $1 - Number of jobs pushed",
+    "aiseometa-test-title": "Header for the AI provider test section",
+    "aiseometa-test-message": "Label for the test message input field",
+    "aiseometa-test-submit": "Button text to submit the test message",
+    "aiseometa-test-success": "Success message prefix for the AI response",
+    "aiseometa-test-error": "Error message when the AI test fails. Parameters:\n* $1 - The error message",
+    "right-aiseometa-admin": "{{doc-right|aiseometa-admin}}",
+    "action-aiseometa-admin": "{{doc-action|aiseometa-admin}}"
 }
