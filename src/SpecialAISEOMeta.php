@@ -18,6 +18,11 @@ class SpecialAISEOMeta extends SpecialPage {
         $this->checkPermissions();
         $this->outputHeader();
 
+        // Load Codex styles for the custom HTML elements
+        $this->getOutput()->addModuleStyles([
+            'codex.styles-all'
+        ]);
+
         $this->showConfig();
         $this->showQueryForm();
         $this->showBatchForm();
