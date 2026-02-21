@@ -82,6 +82,10 @@ class SpecialAISEOMeta extends SpecialPage {
                 'label-message' => 'aiseometa-test-message',
                 'default' => 'Hello, are you working?',
                 'required' => true,
+            ],
+            'action_type' => [
+                'type' => 'hidden',
+                'default' => 'test'
             ]
         ];
 
@@ -92,8 +96,7 @@ class SpecialAISEOMeta extends SpecialPage {
     }
 
     public function processTestForm($formData) {
-        $request = $this->getRequest();
-        if (!$request->wasPosted() || $request->getVal('wpwpbuild') !== 'testform') {
+        if (($formData['action_type'] ?? '') !== 'test') {
             return false;
         }
 
@@ -130,6 +133,10 @@ class SpecialAISEOMeta extends SpecialPage {
                 'type' => 'text',
                 'label-message' => 'aiseometa-page-title',
                 'required' => true,
+            ],
+            'action_type' => [
+                'type' => 'hidden',
+                'default' => 'query'
             ]
         ];
 
@@ -140,8 +147,7 @@ class SpecialAISEOMeta extends SpecialPage {
     }
 
     public function processQueryForm($formData) {
-        $request = $this->getRequest();
-        if (!$request->wasPosted() || $request->getVal('wpwpbuild') !== 'queryform') {
+        if (($formData['action_type'] ?? '') !== 'query') {
             return false;
         }
 
@@ -205,6 +211,10 @@ class SpecialAISEOMeta extends SpecialPage {
                 'help-message' => 'aiseometa-batch-help',
                 'required' => true,
                 'rows' => 5
+            ],
+            'action_type' => [
+                'type' => 'hidden',
+                'default' => 'batch'
             ]
         ];
 
@@ -215,8 +225,7 @@ class SpecialAISEOMeta extends SpecialPage {
     }
 
     public function processBatchForm($formData) {
-        $request = $this->getRequest();
-        if (!$request->wasPosted() || $request->getVal('wpwpbuild') !== 'batchform') {
+        if (($formData['action_type'] ?? '') !== 'batch') {
             return false;
         }
 
